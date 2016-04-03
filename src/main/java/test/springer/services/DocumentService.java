@@ -17,4 +17,9 @@ public class DocumentService {
     public MyDocument getDocumentForTicket(MyTicket ticket) {
         return storageService.getDocumentForId(ticket.getDocumentId());
     }
+
+    public MyDocument storeDocument(MyDocument document) {
+        return storageService.storeDocument(document);
+    }
+
 }
