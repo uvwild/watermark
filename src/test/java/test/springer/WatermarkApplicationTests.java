@@ -1,56 +1,30 @@
 package test.springer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import test.springer.data.*;
-import test.springer.services.TicketService;
 
+import java.util.stream.Stream;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+
+/**
+ * make this abstract so we can inherit the spring config from test subclasses
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WatermarkApplication.class)
-public class WatermarkApplicationTests {
-
-	@Test
-	public void contextLoads() {
-	}
-
-	public MyDocument createTestBook() {
-        MyBook book = new MyBook();
-        book.setAuthor("Göthe");
-        book.setId(4711l);
-        book.setTitle("Feist");
-        book.setTopic(Topic.MEDIA);
-        return book;
-    }
-
-    public MyDocument createTestJournal() {
-        MyJournal journal = new MyJournal();
-        journal.setAuthor("Humphrey Bogart");
-        journal.setTitle("Vom Winde verklebt");
-        journal.setId(42l);
-        return journal;
-    }
-
-    @Autowired
-    TicketService ticketService;
+abstract public class WatermarkApplicationTests {
 
     @Test
-	public void testCreateBookJson() throws JsonProcessingException {
-        MyTicket ticket = ticketService.createTicket(createTestBook());
-        assert (ticket != null);
-        ticketService.createWatermark(ticket);
-        assert(ticketService.getTicket(ticket.getId()) == null);
+    @Ignore
+    public void printEnumsValues() {
+        Stream.of(Content.values()).forEach(value -> System.err.println(value));
+        Stream.of(Topic.values()).forEach(value -> System.err.println(value));
     }
-
-    @Test
-    public void testCreateJournalJson() throws JsonProcessingException {
-        MyTicket ticket = ticketService.createTicket(createTestBook());
-        assert (ticket != null);
-        ticketService.createWatermark(ticket);
-        assert(ticketService.getTicket(ticket.getId()) == null);
-    }
-
 }

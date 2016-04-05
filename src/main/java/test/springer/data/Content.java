@@ -4,21 +4,22 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
- * Created by uv on 03.04.2016 for watermark
+ * Created by uv on 31.03.2016 for watermark
  */
-public enum Topic {
-    BUSINESS("business"), SCIENCE("science"), MEDIA("media");
+public enum Content {
+    BOOK("book"), JOURNAL("journal");
 
     @Getter
     private String name;
 
-    Topic (String name) {
+    Content(String name) {
         this.name = name;
     }
 
     @Override
-    @JsonValue     // annotate method to obtain lower case values for enum
+    @JsonValue
     public String toString() {
         return name;
     }
+
 }

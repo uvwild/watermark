@@ -6,8 +6,8 @@ package test.springer.data;
 public class MyJournal extends MyDocument {
 
     public MyJournal() {
-        super.setDocType(DocType.JOURNAL);
-        super.setJsonView(Views.Journal.class);
+        super.setContent(Content.JOURNAL);
+        super.setJsonView(MyViews.Journal.class);
     }
 
 }
