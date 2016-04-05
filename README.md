@@ -24,7 +24,10 @@ Examples for watermarks:
  - jsonviews are used to select the properties for the mapping
  - a rest service provides external access for the requested operation
  - an async task and a threadpoolexecutor are handling the async watermarking
- - without the rest service a future should be used to wait for the result instead of the wait loop 
+ - without the rest service a future should be used to wait for the result instead of the wait loop
+ - the async implementation just processes the list in creation order....
+ - **instead the watermark task could be started asynchronously only for the requested ticket 
+   with some effects on the required datastructures**
  
 ## tests 
  - tests for the business logic in the local watermarkservice
