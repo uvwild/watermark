@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 
 @SpringBootApplication
 @EnableAsync
-
+@EnableScheduling
 public class WatermarkApplication implements AsyncConfigurer {
 
     static Logger logger = Logger.getLogger(WatermarkApplication.class.getName());
@@ -26,10 +27,13 @@ public class WatermarkApplication implements AsyncConfigurer {
 	}
 
 	@Bean
-	WatermarkingExecutor getWatermarkingExecutor() {
-		return new WatermarkingExecutor();
+    WatermarkingTask getWatermarkingExecutor() {
+		return new WatermarkingTask();
 	}
 
+    /**
+     * @return a preconfigured threadpool task executor to run our watermarking task
+     */
 	@Override
 	public Executor getAsyncExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -46,10 +50,13 @@ public class WatermarkApplication implements AsyncConfigurer {
 		return (ex, method, params) -> logger.log(Level.SEVERE, String.format("E0000 Uncaught Exception in method %s(...): %s", method.getName(), ex.getMessage()));
 	}
 
+    /**
+     * @return a json mapper preconfigured for our use cases
+     */
 	@Bean
 	public ObjectMapper myObjectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false); // this is ESSENTIAL configuration!!!!
+		mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false); // this is ESSENTIAL configuration to make use of the JsonViews !!!!
 		return mapper;
 	}
 }

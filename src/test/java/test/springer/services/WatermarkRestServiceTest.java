@@ -58,9 +58,7 @@ public class WatermarkRestServiceTest extends WatermarkApplicationTests implemen
 
     @Test
     public void testGetTicketForDocument() throws Exception {
-        MvcResult result = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult result = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson)).andExpect(status().isOk()).andReturn();
         String json = result.getResponse().getContentAsString();
         MyTicket ticket = ticketReader.readValue(json);
         assertThat(ticket.getDocumentId(), is(testBook.getId()));
@@ -68,14 +66,10 @@ public class WatermarkRestServiceTest extends WatermarkApplicationTests implemen
 
     @Test
     public void testGetWatermarkTicketForId() throws Exception {
-        MvcResult result = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult result = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson)).andExpect(status().isOk()).andReturn();
         String jsonTicket = result.getResponse().getContentAsString();
         MyTicket ticket = ticketReader.readValue(jsonTicket);
-        MvcResult result2 = mvc.perform(get(ApiDefinitions.getTicketForDocId + "/4711").accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult result2 = mvc.perform(get(ApiDefinitions.getTicketForDocId + "/4711").accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk()).andReturn();
         String jsonTicket2 = result2.getResponse().getContentAsString();
         MyTicket ticket2 = ticketReader.readValue(jsonTicket2);
         assertThat(ticket.getId(), is(ticket2.getId()));
@@ -84,15 +78,12 @@ public class WatermarkRestServiceTest extends WatermarkApplicationTests implemen
 
     @Test
     public void testGetDocumentForTicketId() throws Exception {
-        MvcResult resultTicket = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult resultTicket = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson)).andExpect(
+                status().isOk()).andReturn();
         String jsonticket = resultTicket.getResponse().getContentAsString();
         MyTicket ticket = ticketReader.readValue(jsonticket);
 
-        MvcResult resultDoc = mvc.perform(get(ApiDefinitions.getDocForTicketId + "/0").accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn();
+        MvcResult resultDoc = mvc.perform(get(ApiDefinitions.getDocForTicketId + "/0").accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk()).andReturn();
         String jsonDoc = resultDoc.getResponse().getContentAsString();
         MyDocument document = docReader.readValue(jsonDoc);
         assertThat(document.getId(), is(4711l));
@@ -100,14 +91,22 @@ public class WatermarkRestServiceTest extends WatermarkApplicationTests implemen
 
     @Test
     public void testIsWatermarkTicketFinished() throws Exception {
-        MvcResult resultTicket = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson))
-                .andExpect(status().isOk())
-                .andReturn();
+        // insert testbook to obtain ticket
+        MvcResult resultTicket = mvc.perform(post(ApiDefinitions.getTicketForDoc).contentType(MediaType.APPLICATION_JSON_UTF8).content(testBookJson)).andExpect(
+                status().isOk()).andReturn();
         String jsonticket = resultTicket.getResponse().getContentAsString();
         MyTicket ticket = ticketReader.readValue(jsonticket);
 
-        // TODO watermark ticket by starting async executor
-
+        // wait for processing the ticket
+        String jsondoc = null;
+        while (jsondoc == null) {
+            Thread.sleep(500l);     // wait a moment for aysnc executor
+            MvcResult finished = mvc.perform(post(ApiDefinitions.isTicketFinished + "/" + ticket.getId()).contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(
+                    status().isOk()).andReturn();
+            jsondoc = finished.getResponse().getContentAsString();
+        }
+        MyDocument document = docReader.readValue(jsondoc);
+        assertThat(document.getId(), is(4711l));
     }
 
     // local helper

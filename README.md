@@ -14,3 +14,18 @@ Examples for watermarks:
 * Create an appropriate object-oriented model for the problem.
 * Implement the Watermark-Service, meeting the above conditions.
 * Provide Unit-Tests to ensure the functionality of the service.
+
+#Solution
+
+## code
+ - created a spring boot application using service interfaces for local tickets and documents
+ - provided a simple concurrent map based implementation for these services
+ - the watermark service uses those services to process the tickets
+ - jsonviews are used to select the properties for the mapping
+ - a rest service provides external access for the requested operation
+ - an async task and a threadpoolexecutor are handling the async watermarking
+ - without the rest service a future should be used to wait for the result instead of the wait loop 
+ 
+## tests 
+ - tests for the business logic in the local watermarkservice
+ - integration tests using MockMvc for the rest service

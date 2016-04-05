@@ -63,7 +63,7 @@ public class WatermarkServiceTest extends WatermarkApplicationTests implements T
     }
 
     @Test
-    public void testWatermarkNextTicket() throws Exception {
+    public void testWatermarkNextTicket() throws Exception {       // this tests the synchronous service method
         long countb4 = watermarkService.countTodoTickets();
         watermarkService.watermarkNextTicket();
         watermarkService.watermarkNextTicket();

@@ -3,6 +3,7 @@ package test.springer.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.web.bind.annotation.*;
+import test.springer.WatermarkingTask;
 import test.springer.data.MyDocument;
 import test.springer.data.MyTicket;
 
@@ -21,6 +22,9 @@ public class WatermarkRestService implements ApiDefinitions {
     @Autowired
     private WatermarkService watermarkService;
 
+    @Autowired
+    private WatermarkingTask watermarkingTask;
+
 
     /**
      * @param document
@@ -31,6 +35,7 @@ public class WatermarkRestService implements ApiDefinitions {
         if (document != null && document.getId() != null) {
             documentStorageService.putDocument(document);
             MyTicket ticket = watermarkService.getTicket(document);
+            watermarkingTask.doWaterMarking();      // called aysnchronously due to annotation
             return ticket;
         } else
             return null;

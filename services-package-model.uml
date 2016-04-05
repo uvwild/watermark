@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>test.springer.services</OriginalElement>
+  <nodes>
+    <node x="87.0" y="324.0">test.springer.services.DocumentStorageService</node>
+    <node x="800.0" y="559.0">test.springer.services.WatermarkServiceTest</node>
+    <node x="337.0" y="614.0">test.springer.services.WatermarkRestService</node>
+    <node x="961.75" y="0.0">test.springer.services.TicketStorageService</node>
+    <node x="0.0" y="658.0">test.springer.services.SimpleDocumentStorageService</node>
+    <node x="440.5" y="302.0">test.springer.services.ApiDefinitions</node>
+    <node x="0.0" y="899.0">test.springer.services.WatermarkRestServiceTest</node>
+    <node x="771.25" y="213.0">test.springer.services.WatermarkService</node>
+    <node x="1140.25" y="268.0">test.springer.services.SimpleTicketStorageService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="test.springer.services.WatermarkRestService" target="test.springer.services.ApiDefinitions">
+      <point x="0.0" y="-92.5" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="test.springer.services.SimpleDocumentStorageService" target="test.springer.services.DocumentStorageService">
+      <point x="0.0" y="-48.5" />
+      <point x="-71.5" y="37.0" />
+    </edge>
+    <edge source="test.springer.services.WatermarkServiceTest" target="test.springer.services.WatermarkService">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="test.springer.services.WatermarkRestService" target="test.springer.services.DocumentStorageService">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="test.springer.services.WatermarkService" target="test.springer.services.TicketStorageService">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="test.springer.services.SimpleTicketStorageService" target="test.springer.services.TicketStorageService">
+      <point x="0.0" y="-93.0" />
+      <point x="1314.75" y="188.0" />
+      <point x="1214.5" y="188.0" />
+      <point x="84.25" y="81.5" />
+    </edge>
+    <edge source="test.springer.services.WatermarkRestService" target="test.springer.services.WatermarkService">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8317880794701987" x="745.0" y="608.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
